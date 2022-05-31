@@ -29,9 +29,9 @@ services:
     ports:
       - "8080:80"
   backend:
-    container_name: backend
+    container_name: back
     build:
-      context: ./het-ejdid-back
+      context: ./back
       dockerfile: dockerfile
     ports:
         - "81:8080"
@@ -49,7 +49,7 @@ services:
   frontend:
     container_name: frontend
     build:
-      context: ./het-ejdid-front
+      context: ./front
       dockerfile: dockerfile
     ports:
         - "3000:3000"
@@ -60,13 +60,13 @@ services:
       - backend:backend
     restart: always
     volumes:
-      - ./het-ejdid-front/src/:/app/src/
+      - ./front/src/:/app/src/
 
     
   scraping:
     container_name: scraping
     build:
-      context: ./het-ejdid-scraping
+      context: ./scraping
       dockerfile: dockerfile
     depends_on:
       - db
