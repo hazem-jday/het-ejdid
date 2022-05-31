@@ -1,0 +1,9 @@
+[submodule "back"]
+	path = back
+	url = https://github.com/hazem-jday/het-ejdid-back
+[submodule "front"]
+	path = front
+	url = https://github.com/hazem-jday/het-ejdid-front
+[submodule "scraping"]
+	path = scraping
+	url = https://github.com/hazem-jday/het-ejdid-scraping
