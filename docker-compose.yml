@@ -1,0 +1,82 @@
+version: '3'
+
+services:
+  
+  db:
+    image: mysql:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: hazem
+      MYSQL_DATABASE: het-ejdid
+      MYSQL_USER: hazem
+      MYSQL_PASSWORD: hazem
+    ports:
+      - "6033:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    restart: always
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - "8080:80"
+  backend:
+    container_name: backend
+    build:
+      context: ./het-ejdid-back
+      dockerfile: dockerfile
+    ports:
+        - "81:8080"
+    environment:
+      MYSQL_ROOT_PASSWORD: hazem
+      MYSQL_DATABASE: het-ejdid
+      MYSQL_USER: hazem
+      MYSQL_PASSWORD: hazem
+      MYSQL_PORT: 3306
+    depends_on:
+      - db
+    links:
+      - db:db
+    restart: always
+  frontend:
+    container_name: frontend
+    build:
+      context: ./het-ejdid-front
+      dockerfile: dockerfile
+    ports:
+        - "3000:3000"
+        - "80:3000"
+    depends_on:
+      - backend
+    links:
+      - backend:backend
+    restart: always
+    volumes:
+      - ./het-ejdid-front/src/:/app/src/
+
+    
+  scraping:
+    container_name: scraping
+    build:
+      context: ./het-ejdid-scraping
+      dockerfile: dockerfile
+    depends_on:
+      - db
+      - backend
+    links:
+      - db:db
+    restart: always
+    volumes:
+      - scrapingdata:/app
+  
+volumes:
+  dbdata:
+  scrapingdata:
