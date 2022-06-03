@@ -1,9 +1,9 @@
-[submodule "back"]
-	path = back
+[submodule "het-ejdid-back"]
+	path = het-ejdid-back
 	url = https://github.com/hazem-jday/het-ejdid-back
-[submodule "front"]
-	path = front
+[submodule "het-ejdid-front"]
+	path = het-ejdid-front
 	url = https://github.com/hazem-jday/het-ejdid-front
-[submodule "scraping"]
-	path = scraping
+[submodule "het-ejdid-scraping"]
+	path = het-ejdid-scraping
 	url = https://github.com/hazem-jday/het-ejdid-scraping
